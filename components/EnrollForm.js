@@ -7,23 +7,31 @@ export default class EnrollForm extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Input
-                    inputStyle={styles.inputStyle}
-                    placeholder='ID'
-                    leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
-                />
-                <Input
-                    inputStyle={styles.inputStyle}
-                    placeholder='Password'
-                    leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
-                />
-               <View style={styles.btnContainer}>
-               <Button
+                <View>
+                    <Input
+                        inputStyle={styles.inputStyle}
+                        placeholder='ID'
+                        leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
+                    />
+                </View>
+                <View>
+                    <Input
+                        inputStyle={styles.inputStyle}
+                        placeholder='Password'
+                        leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
+                    />
+                </View>
+                <View style={styles.btnContainer}>
+                <Button
                     title="Enroll"
                     type="outline"
                 />
-               </View>
+                </View>
             </View>
+
+
+
+
         )
     }
 }
@@ -38,6 +46,6 @@ const styles = StyleSheet.create({
         padding: 20
     },
     btnContainer: {
-        paddingTop: 50
+        padding: 50
     }
 });

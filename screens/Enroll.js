@@ -9,9 +9,9 @@ export default class Enroll extends Component{
 
     render() {
         return (
-            <View style={styles.container}>
-                <EnrollForm />
-            </View>
+                <View>
+                    <EnrollForm />
+                </View>
         )
     }
 }
