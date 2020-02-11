@@ -4,11 +4,12 @@ import BackyardImg from '../assets/backyard.jpg'
 export default function BinList(props) {
     const { bin, onPress } = props;
     return (
+        
         <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
             <View style={styles.container}>
                 <Image source={BackyardImg} style={styles.img}></Image>
-                <Text style={styles.title}>Locate</Text>
-                <Text style={styles.status}>Status</Text>
+                <Text style={styles.title}>{bin.locate}</Text>
+                <Text style={styles.status}>{bin.status}</Text>
             </View>
         </TouchableOpacity>
     );

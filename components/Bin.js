@@ -4,7 +4,7 @@ import { Card, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Bin(props) {
-    const { locate, status, onPress } = props;
+    const { binId, onPress } = props;
     return (
         <Card
             title='Backyard'
