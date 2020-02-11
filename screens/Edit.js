@@ -8,9 +8,14 @@ export default class Edit extends Component{
     }
 
     render() {
+        
+        const { navigation } = this.props;
+        const binId = navigation.getParam('id');
         return (
             <View style={styles.container}>
-                <EditForm />
+                <EditForm 
+                binId
+                />
             </View>
         )
     }

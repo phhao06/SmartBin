@@ -11,16 +11,13 @@ export default class Detail extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            binInfo: {
-
-            }
+            id: ''
         }
     }
     async componentDidMount() {
         const { navigation } = this.props;
         const binId = navigation.getParam('id');
-        //console.log(productId);
-    
+        this.setState({id : binId})
         try {
           // get data from firebase
         } catch (err) {
@@ -33,7 +30,7 @@ export default class Detail extends React.Component{
         const { navigation } = this.props;
         return (
                 <View style={styles.container}>
-                <Bin onPress={() => navigation.navigate('Edit')}
+                <Bin onPress={() => navigation.navigate('Edit',{id: this.state.id})}
         />
             </View>
         )
