@@ -4,24 +4,24 @@ import { Card, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Bin(props) {
-    const { binId, onPress } = props;
+    const { bin, onPress } = props;
     return (
         <Card
-            title='Backyard'
+            title={bin.locate}
             titleStyle={styles.title}
             image={require('../assets/backyard.jpg')} style={styles.img}>
             <Text style={styles.infoText}>
-                ID: A00001
+                {bin.id}
             </Text>
             <Text style={styles.infoText}>
                 Status: Empty
             </Text>
             <Text style={styles.infoText}>
-                Date: 1/1/2020
+                {bin.date}
             </Text>
             <View style={styles.shadow}>
             <Text >
-                THis is disription for trash bin
+                {bin.description}
             </Text>
             </View>
 

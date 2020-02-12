@@ -89,9 +89,6 @@ export default class EnrollForm extends React.Component {
                 </View>
             </View>
 
-
-
-
         )
     }
 }
