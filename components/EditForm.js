@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput, Alert } from 'react-native';
+import { View, StyleSheet, Text, TextInput,TouchableOpacity,Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { db } from '../config';
 
 
-console.log("Chinh sua thanh cong")
-// }
+
 
 export default class EditForm extends React.Component {
     constructor(props) {
@@ -20,6 +19,7 @@ export default class EditForm extends React.Component {
     componentDidMount() {
         let currentComponent = this;
         const uid = this.props.message
+        
         console.log(uid)
         try {
             db.ref('bins/' + uid).once('value', function (snapshot) {
@@ -50,17 +50,46 @@ export default class EditForm extends React.Component {
             this.setState({ locate: userInput })
         }
     }
+    // alertHandle() {
+    //     console.log("onPress")
+    //     Alert.alert(
+    //         'Alert',
+    //         'Chinh sua hoan tat',
+    //         [
+    //           {
+    //             text: 'Close',
+    //             onPress: () => console.log('Cancel Pressed'),
+    //             style: 'cancel',
+    //           },
+    //           {text: 'OK', onPress: onPress },
+    //         ],
+    //         {cancelable: false},
+    //     )
+    // }
     handleSubmit() {
         const binId = this.props.message
+        const onPress = this.props.onPress
+        //console.log(onPress)
         db.ref("bins/" + binId).update({
             locate: this.state.locate,
             date: this.state.date,
             description: this.state.description
-        })
+        }).then(
+            Alert.alert(
+                'Alert',
+                'Chinh sua hoan tat',
+                [
+                  {text: 'OK', onPress: onPress },
+                ],
+                {cancelable: false},
+            )
+        )
+        
+        
     }
 
     render() {
-
+        const redirect = this.props.onPress
         //console.log("UID: ",uid)
         return (
             <View style={styles.container}>
@@ -100,8 +129,13 @@ export default class EditForm extends React.Component {
                     <Button
                         title="Edit"
                         type="outline"
-                        onPress={() =>this.handleSubmit()}
+                        onPress={() =>{
+                                this.handleSubmit()
+                            }}
                     />
+                    {/* <TouchableOpacity onPress={this.alertHandle} style={styles.button}>
+                        <Text>Submit</Text>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         )
@@ -119,5 +153,12 @@ const styles = StyleSheet.create({
     },
     btnContainer: {
         paddingTop: 50
-    }
+    },
+    button: {
+        backgroundColor: '#4ba37b',
+        width: 100,
+        borderRadius: 50,
+        alignItems: 'center',
+        marginTop: 100
+     }
 });

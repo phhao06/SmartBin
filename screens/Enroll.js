@@ -8,9 +8,12 @@ export default class Enroll extends Component{
     }
 
     render() {
+        const { navigation } = this.props
         return (
                 <View>
-                    <EnrollForm />
+                    <EnrollForm 
+                        redirect={() => navigation.navigate('Home')}
+                    />
                 </View>
         )
     }

@@ -24,7 +24,10 @@ export default class Edit extends Component{
         console.log(uid)
         return (
             <View style={styles.container}>
-            <EditForm message={uid}/>
+            <EditForm 
+            message={uid}
+            onPress={()=>navigation.navigate('Home')}
+            />
         </View>
         )
     }

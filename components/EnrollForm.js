@@ -1,49 +1,92 @@
 import React from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Image, Text, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { db } from '../config';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
-function addBin(data) {
-    db.ref('bins/').push({
-        id: data.id,
-        locate : data.locate,
-        date: data.date,
-        description: data.description,
-    });
-};
+const initState = {
+    id: '',
+    locate: '',
+    date: '',
+    description: '',
+    status: false,
+    image: ''
+}
 export default class EnrollForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-                id: '',
-                locate: '',
-                date: '',
-                description: ''
-            }
+        this.state = initState
     }
+    reset() {
+        this.setState(initState)
+    }
+    addBin(data, cb) {
+        db.ref('bins/').push({
+            id: data.id,
+            locate: data.locate,
+            date: data.date,
+            description: data.description,
+            status: data.status,
+            image: data.image
+        }).then(cb)//.then(this.reset());
+    };
 
-    
     handleSubmit = () => {
+        const redirect = this.props.redirect
+        console.log(redirect)
         let bin = {
             id: this.state.id,
             locate: this.state.locate,
             date: this.state.date,
-            description: this.state.description
+            description: this.state.description,
+            status: this.state.status,
+            image: this.state.image
         }
-        console.log(bin);
-        addBin(bin);
-        console.log("Saving....")
-        //Alert.alert('Item saved successfully');
+        if (bin.id) {
+            this.addBin(bin, redirect);
+        } else {
+            Alert.alert("Error Syntax")
+        }
+
     }
+
+    pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
+        });
+
+        console.log(result);
+
+        if (!result.cancelled) {
+            this.setState({ image: result.uri });
+        }
+    };
+
     render() {
+        let uri = this.state.image
         return (
             <View style={styles.container}>
+                 <View style={styles.btnContainer}>
+                    <Button
+                        title="Pick an image from camera roll"
+                        onPress={this.pickImage}
+                        buttonStyle={styles.imgBtn}
+                    />
+                </View>
+                <View style={{paddingBottom: 10}}>
+                <Image source={{ uri: uri }} style={styles.imgSelected} />
+                </View>
+                
                 <View>
                     <Input
                         inputStyle={styles.inputStyle}
                         placeholder='Bin ID'
-                        onChangeText={(id) =>this.setState({id: id})}
+                        onChangeText={(id) => this.setState({ id: id })}
                         leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
                     />
                 </View>
@@ -51,7 +94,7 @@ export default class EnrollForm extends React.Component {
                     <Input
                         inputStyle={styles.inputStyle}
                         placeholder='Locate'
-                        onChangeText={(locate) =>this.setState({locate: locate})}
+                        onChangeText={(locate) => this.setState({ locate: locate })}
                         leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
                     />
                 </View>
@@ -59,7 +102,7 @@ export default class EnrollForm extends React.Component {
                     <Input
                         inputStyle={styles.inputStyle}
                         placeholder='Date'
-                        onChangeText={(date) =>this.setState({date})}
+                        onChangeText={(date) => this.setState({ date })}
                         leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
                     />
                 </View>
@@ -67,26 +110,19 @@ export default class EnrollForm extends React.Component {
                     <Input
                         inputStyle={styles.inputStyle}
                         placeholder='Description'
-                        onChangeText={(description) =>this.setState({description})}
+                        onChangeText={(description) => this.setState({ description })}
                         leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
                     />
                 </View>
+                
                 <View style={styles.btnContainer}>
-                    <Text>
-                        {this.state.locate}
-                    </Text>
-                    <Text>
-                        {this.state.date}
-                    </Text>
-                    <Text>
-                        {this.state.description}
-                    </Text>
-                <Button
-                    title="Enroll"
-                    type="outline"
-                    onPress={this.handleSubmit}
-                />
+                    <Button
+                        title="Enroll"
+                        type="solid"
+                        onPress={() => this.handleSubmit()}
+                    />
                 </View>
+               
             </View>
 
         )
@@ -103,6 +139,14 @@ const styles = StyleSheet.create({
         padding: 20
     },
     btnContainer: {
-        padding: 50
+        padding: 10
+    },
+    imgBtn: {
+        height:40,
+        width:100
+    },
+    imgSelected: {
+        width: 128, 
+        height: 64 
     }
 });

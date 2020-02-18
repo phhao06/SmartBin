@@ -25,7 +25,6 @@ export default class Detail extends React.Component{
         const binId = navigation.getParam('id');
         let currentComponent = this;
         let rootRef = db.ref('bins/'+binId)
-        
         try {
         rootRef.once('value', function(snapshot){
             let fdata = snapshot.val();
@@ -43,13 +42,12 @@ export default class Detail extends React.Component{
         
         const { navigation } = this.props;
         let binInfo = this.state.bin;
-        //console.log(binInfo.uuid)
-        //console.log(binInfo)
         return (
                 <View style={styles.container}>
                 <Bin 
                 bin = {binInfo}
                 onPress={() => navigation.navigate('Edit', {id: binInfo.uuid})}
+                redirectHome = {() =>navigation.navigate('Home')}
               />
             </View>
         )

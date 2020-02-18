@@ -1,20 +1,38 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, Text, Image,  Alert } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { db } from '../config';
 
+function WarnAlert(id,cb) {
+    Alert.alert(
+        'Warning',
+        'Are you sure?',
+        [
+          
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () =>  db.ref('bins/'+id).remove().then(cb)},
+        ],
+        {cancelable: false},
+      );
+}
 export default function Bin(props) {
-    const { bin, onPress } = props;
+    const { bin, onPress, redirectHome } = props;
+    console.log(bin.uuid)
     return (
         <Card
             title={bin.locate}
             titleStyle={styles.title}
-            image={require('../assets/backyard.jpg')} style={styles.img}>
+            image={{uri: bin.image}} style={styles.img}>
             <Text style={styles.infoText}>
                 {bin.id}
             </Text>
             <Text style={styles.infoText}>
-                Status: Empty
+                {bin.status}
             </Text>
             <Text style={styles.infoText}>
                 {bin.date}
@@ -36,7 +54,7 @@ export default function Bin(props) {
                     icon={<Icon name='edit' color='#ffffff' />}
                     buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
                     title='Delete'
-                    onPress={() => { Alert.alert("Deleted") }} />
+                    onPress={() =>WarnAlert(bin.uuid,redirectHome)} />
             </View>
         </Card>
     );
@@ -72,6 +90,7 @@ const styles = StyleSheet.create({
         width: 200,
         borderTopLeftRadius: 10,
         borderBottomLeftRadius: 10,
+        resizeMode: 'contain',
     },
     infoRow: {
         flexDirection: "row",
