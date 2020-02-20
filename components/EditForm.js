@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput,TouchableOpacity,Alert } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { db } from '../config';
-
+import * as ImagePicker from 'expo-image-picker';
 
 
 
@@ -13,13 +13,14 @@ export default class EditForm extends React.Component {
         this.state = {
             locate: "",
             date: "",
-            description: ""
+            description: "",
+            image: ''
         }
     }
     componentDidMount() {
         let currentComponent = this;
         const uid = this.props.message
-        
+
         console.log(uid)
         try {
             db.ref('bins/' + uid).once('value', function (snapshot) {
@@ -73,26 +74,72 @@ export default class EditForm extends React.Component {
         db.ref("bins/" + binId).update({
             locate: this.state.locate,
             date: this.state.date,
-            description: this.state.description
+            description: this.state.description,
+            image: this.state.image
         }).then(
             Alert.alert(
                 'Alert',
                 'Chinh sua hoan tat',
                 [
-                  {text: 'OK', onPress: onPress },
+                    { text: 'OK', onPress: onPress },
                 ],
-                {cancelable: false},
+                { cancelable: false },
             )
         )
-        
-        
+
+
+    }
+    pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
+        });
+
+        console.log(result);
+
+        if (!result.cancelled) {
+            this.setState({ image: result.uri });
+        }
+    };
+    takeImage = async () => {
+        let { status } = await ImagePicker.requestCameraPermissionsAsync()
+        console.log("Status: ", status);
+        let result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            base64: true
+        });
+        console.log(result);
+
+        if (!result.cancelled) {
+            this.setState({ image: result.uri });
+        }
     }
 
     render() {
         const redirect = this.props.onPress
         //console.log("UID: ",uid)
+        let uri = this.state.image
         return (
             <View style={styles.container}>
+                <View style={styles.btnContainer}>
+                    <Button
+                        title="Choose Picture"
+                        onPress={this.pickImage}
+                        buttonStyle={styles.imgBtn}
+                    />
+                </View>
+                <View style={styles.btnContainer}>
+                <Button 
+                        title="Camera"
+                        onPress={this.takeImage}
+                        buttonStyle={styles.imgBtn}
+                    />
+                </View>
+                <View style={{ paddingBottom: 10 }}>
+                    <Image source={{ uri: uri }} style={styles.imgSelected} />
+                </View>
                 <Input
                     inputStyle={styles.inputStyle}
                     onChangeText={(locate) => this.handleLocateInput(locate)}
@@ -129,9 +176,9 @@ export default class EditForm extends React.Component {
                     <Button
                         title="Edit"
                         type="outline"
-                        onPress={() =>{
-                                this.handleSubmit()
-                            }}
+                        onPress={() => {
+                            this.handleSubmit()
+                        }}
                     />
                     {/* <TouchableOpacity onPress={this.alertHandle} style={styles.button}>
                         <Text>Submit</Text>
@@ -152,7 +199,15 @@ const styles = StyleSheet.create({
         padding: 20
     },
     btnContainer: {
-        paddingTop: 50
+        paddingBottom: 10
+    },
+    imgSelected: {
+        width: 128, 
+        height: 64 
+    },
+    imgBtn: {
+        height:40,
+        width:120
     },
     button: {
         backgroundColor: '#4ba37b',
@@ -160,5 +215,5 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         marginTop: 100
-     }
+    }
 });

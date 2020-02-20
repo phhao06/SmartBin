@@ -23,11 +23,15 @@ function WarnAlert(id,cb) {
 export default function Bin(props) {
     const { bin, onPress, redirectHome } = props;
     console.log(bin.uuid)
+    console.log(bin.image)
     return (
         <Card
             title={bin.locate}
             titleStyle={styles.title}
-            image={{uri: bin.image}} style={styles.img}>
+            >
+            <View style={styles.imgContainer}>
+                <Image source = {{uri: bin.image}} style={styles.img}/>
+            </View>
             <Text style={styles.infoText}>
                 {bin.id}
             </Text>
@@ -87,10 +91,15 @@ const styles = StyleSheet.create({
     },
     img: {
         height: 150,
-        width: 200,
+        width: 300,
         borderTopLeftRadius: 10,
         borderBottomLeftRadius: 10,
         resizeMode: 'contain',
+        alignItems: 'center'
+    },
+    imgContainer: {
+        justifyContent: 'center',
+        alignItems:'center'
     },
     infoRow: {
         flexDirection: "row",

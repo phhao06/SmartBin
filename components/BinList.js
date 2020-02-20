@@ -13,7 +13,7 @@ export default function BinList(props) {
         
         <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
             <View style={styles.container}>
-                <Image source={BackyardImg} style={styles.img}></Image>
+                <Image source={{uri: bin.image}} style={styles.img}></Image>
                 <Text style={styles.title}>{bin.locate}</Text>
                 <Text style={styles.status}>{statusBin}
                     </Text>
