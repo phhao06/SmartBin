@@ -6,13 +6,41 @@ import { db } from '../config';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
+
+let currentDate = new Date()
+let year = currentDate.getFullYear()
+let month = currentDate.getMonth()
+let date = currentDate.getDate()
+let hours = currentDate.getHours()
+let minutes = currentDate.getMinutes()
+let seconds = currentDate.getSeconds()
+
+if(month < 10){
+    month = `0${month}`
+}
+console.log(currentDate)
+console.log(month)
+if(date < 10){
+    date = `0${date}`
+}
+if(hours < 10){
+    hours = `0${hours}`
+}
+if(minutes < 10){
+    minutes = `0${minutes}`
+}
+if(seconds < 10){
+    seconds = `0${seconds}`
+}
+var createdDate = `${year}/${month}/${date} - ${hours}:${minutes}:${seconds}`;
+
 const initState = {
     id: '',
     locate: '',
-    date: '',
+    date: createdDate,
     description: '',
     status: false,
-    image: ''
+    image: '../assets/icon.png'
 }
 export default class EnrollForm extends React.Component {
     constructor(props) {
@@ -84,6 +112,7 @@ export default class EnrollForm extends React.Component {
     render() {
         let uri = this.state.image
         //console.log(uri.split(","))
+        
         return (
             <View style={styles.container}>
                 <View style={styles.btnContainer}>
@@ -116,14 +145,6 @@ export default class EnrollForm extends React.Component {
                         inputStyle={styles.inputStyle}
                         placeholder='Locate'
                         onChangeText={(locate) => this.setState({ locate: locate })}
-                        leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
-                    />
-                </View>
-                <View>
-                    <Input
-                        inputStyle={styles.inputStyle}
-                        placeholder='Date'
-                        onChangeText={(date) => this.setState({ date })}
                         leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
                     />
                 </View>

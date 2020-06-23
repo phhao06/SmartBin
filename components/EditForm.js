@@ -14,7 +14,7 @@ export default class EditForm extends React.Component {
             locate: "",
             date: "",
             description: "",
-            image: ''
+            image: '../assets/icon.png'
         }
     }
     componentDidMount() {
@@ -162,17 +162,6 @@ export default class EditForm extends React.Component {
                     leftIcon={{ type: 'font-awesome', name: 'chevron-right' }}
                 />
                 <View style={styles.btnContainer}>
-                    <View>
-                        <Text>
-                            {this.state.locate}
-                        </Text>
-                        <Text>
-                            {this.state.date}
-                        </Text>
-                        <Text>
-                            {this.state.description}
-                        </Text>
-                    </View>
                     <Button
                         title="Edit"
                         type="outline"
