@@ -1,20 +1,21 @@
 # SmartBin
-First We need change our firebase config in <b>config.js</b>.
-Login Firebase and create firebase project as web app
+<br>First We need change our firebase config in <b>config.js</b>.
 
-Go to setting to get your config and add it to variable
+<br>Login Firebase and create firebase project as web app
 
-const firebaseConfig = {
-    apiKey: "#########################",
-    authDomain: "#########################.firebaseapp.com",
+<br>Go to setting to get your config and add it to variable
+
+<br>const firebaseConfig = {
+    <br>apiKey: "#########################",
+    <br>authDomain: "#########################.firebaseapp.com",
     <br>databaseURL: "#########################",
     <br>projectId: "#########################",
     <br>storageBucket: "#########################",
     <br>messagingSenderId: "#########################",
     <br>appId: "#########################",
-    ,br>measurementId: "#########################"
+    <br>measurementId: "#########################"
 };
 
-before running app, make sure you are install package for this project by running:
+<br>before running app, make sure you are install package for this project by running:
 
 <code>npm install</code>
