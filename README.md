@@ -6,17 +6,17 @@
 <br>Go to setting to get your config and add it to variable
 
 <br>
-<code>const firebaseConfig = {
-    <br>apiKey: "#########################",
-    <br>authDomain: "#########################.firebaseapp.com",
-    <br>databaseURL: "#########################",
-    <br>projectId: "#########################",
-    <br>storageBucket: "#########################",
-    <br>messagingSenderId: "#########################",
-    <br>appId: "#########################",
-    <br>measurementId: "#########################"
-};
-</code>
+<code>const firebaseConfig = {</code>
+    <br><code>apiKey: "#########################",
+    <br><code>authDomain: "#########################.firebaseapp.com",</code>
+    <br><code>databaseURL: "#########################",</code>
+    <br><code>projectId: "#########################",</code>
+    <br><code>storageBucket: "#########################",</code>
+    <br><code>messagingSenderId: "#########################",</code>
+    <br><code>appId: "#########################",</code>
+    <br><code>measurementId: "#########################"
+};</code>
+
 <br>before running app, make sure you are install package for this project by running:
 
 <code>npm install</code>
