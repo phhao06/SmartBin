@@ -1,27 +1,48 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, Text, Image,  Alert } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { db } from '../config';
 
+function WarnAlert(id,cb) {
+    Alert.alert(
+        'Warning',
+        'Are you sure?',
+        [
+          
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () =>  db.ref('bins/'+id).remove().then(cb)},
+        ],
+        {cancelable: false},
+      );
+}
 export default function Bin(props) {
-    const { binId, onPress } = props;
+    const { bin, onPress, redirectHome } = props;
+    console.log(bin.description);
     return (
         <Card
-            title='Backyard'
+            title={bin.locate}
             titleStyle={styles.title}
-            image={require('../assets/backyard.jpg')} style={styles.img}>
+            >
+            <View style={styles.imgContainer}>
+                <Image source = {{uri: bin.image}} style={styles.img}/>
+            </View>
             <Text style={styles.infoText}>
-                ID: A00001
+                {bin.id}
             </Text>
             <Text style={styles.infoText}>
-                Status: Empty
+                {bin.status}
             </Text>
             <Text style={styles.infoText}>
-                Date: 1/1/2020
+                {bin.date}
             </Text>
             <View style={styles.shadow}>
             <Text >
-                THis is disription for trash bin
+                {bin.description}
             </Text>
             </View>
 
@@ -36,7 +57,7 @@ export default function Bin(props) {
                     icon={<Icon name='edit' color='#ffffff' />}
                     buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
                     title='Delete'
-                    onPress={() => { Alert.alert("Deleted") }} />
+                    onPress={() =>WarnAlert(bin.uuid,redirectHome)} />
             </View>
         </Card>
     );
@@ -69,9 +90,15 @@ const styles = StyleSheet.create({
     },
     img: {
         height: 150,
-        width: 200,
+        width: 300,
         borderTopLeftRadius: 10,
         borderBottomLeftRadius: 10,
+        resizeMode: 'contain',
+        alignItems: 'center'
+    },
+    imgContainer: {
+        justifyContent: 'center',
+        alignItems:'center'
     },
     infoRow: {
         flexDirection: "row",

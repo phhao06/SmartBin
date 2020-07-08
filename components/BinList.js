@@ -3,13 +3,20 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import BackyardImg from '../assets/backyard.jpg'
 export default function BinList(props) {
     const { bin, onPress } = props;
+    let statusBin
+    if(bin.status == "true"){
+        statusBin="Full"
+    }else{
+        statusBin="Empty"
+    }
     return (
         
         <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
             <View style={styles.container}>
-                <Image source={BackyardImg} style={styles.img}></Image>
+                <Image source={{uri: bin.image}} style={styles.img}></Image>
                 <Text style={styles.title}>{bin.locate}</Text>
-                <Text style={styles.status}>{bin.status}</Text>
+                <Text style={styles.status}>{statusBin}
+                    </Text>
             </View>
         </TouchableOpacity>
     );
