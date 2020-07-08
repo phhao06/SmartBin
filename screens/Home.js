@@ -3,7 +3,7 @@ import { StyleSheet, FlatList } from 'react-native';
 import BinList from '../components/BinList';
 import { db } from '../config'
 
-let binRef = db.ref('bins/');
+let binRef = db.ref('SBins/');
 export default class Home extends React.Component{
     static navigationOption = {
         tittle: 'Home'
@@ -22,7 +22,9 @@ export default class Home extends React.Component{
         try {
         binRef.on('value', function(snapshot){
             let fdata = snapshot.val();
+            //get uuid of each item
             let uuidArr = Object.keys(fdata);
+            //console.log(uuidArr);
             let bins = Object.values(fdata);
             for(let i=0;i<uuidArr.length;i++){
                 bins[i].uuid = uuidArr[i]

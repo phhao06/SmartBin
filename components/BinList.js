@@ -4,7 +4,7 @@ import BackyardImg from '../assets/backyard.jpg'
 export default function BinList(props) {
     const { bin, onPress } = props;
     let statusBin
-    if(Boolean(bin.status)){
+    if(bin.status == "true"){
         statusBin="Full"
     }else{
         statusBin="Empty"

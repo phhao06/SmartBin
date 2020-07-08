@@ -21,9 +21,9 @@ export default class EditForm extends React.Component {
         let currentComponent = this;
         const uid = this.props.message
 
-        console.log(uid)
+        //console.log(uid)
         try {
-            db.ref('bins/' + uid).once('value', function (snapshot) {
+            db.ref('SBins/' + uid).once('value', function (snapshot) {
                 let fdata = snapshot.val()
                 currentComponent.setState({
                     locate: fdata.locate,
@@ -71,7 +71,7 @@ export default class EditForm extends React.Component {
         const binId = this.props.message
         const onPress = this.props.onPress
         //console.log(onPress)
-        db.ref("bins/" + binId).update({
+        db.ref("SBins/" + binId).update({
             locate: this.state.locate,
             date: this.state.date,
             description: this.state.description,

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image,StyleSheet } from 'react-native';
+import { View, Text, Image,StyleSheet, KeyboardAvoidingView } from 'react-native';
 import EditForm from '../components/EditForm';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { db } from '../config';
+import { ScrollView } from 'react-native-gesture-handler';
 
 // function updateData(bin,uuid){
 //     db.ref("bins/"+uuid).update({
@@ -21,14 +22,18 @@ export default class Edit extends Component{
     render() {
         const { navigation } = this.props;
         let uid = navigation.getParam('id')
-        console.log(uid)
+        //console.log(uid)
         return (
-            <View style={styles.container}>
-            <EditForm 
-            message={uid}
-            onPress={()=>navigation.navigate('Home')}
-            />
-        </View>
+            <KeyboardAvoidingView>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <EditForm 
+                        message={uid}
+                        onPress={()=>navigation.navigate('Home')}
+                        />
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
         )
     }
 }

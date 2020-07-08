@@ -22,6 +22,7 @@ function WarnAlert(id,cb) {
 }
 export default function Bin(props) {
     const { bin, onPress, redirectHome } = props;
+    console.log(bin.description);
     return (
         <Card
             title={bin.locate}

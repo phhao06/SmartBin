@@ -51,7 +51,7 @@ export default class EnrollForm extends React.Component {
         this.setState(initState)
     }
     addBin(data, cb) {
-        db.ref('bins/').push({
+        db.ref('SBins/').push({
             id: data.id,
             locate: data.locate,
             date: data.date,

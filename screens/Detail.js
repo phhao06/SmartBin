@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import Bin from '../components/Bin';
 import { db } from '../config';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 export default class Detail extends React.Component{
@@ -23,8 +24,9 @@ export default class Detail extends React.Component{
         // const binId = navigation.getParam('id');
         const { navigation } = this.props;
         const binId = navigation.getParam('id');
+        console.log("console from detail ",binId);
         let currentComponent = this;
-        let rootRef = db.ref('bins/'+binId)
+        let rootRef = db.ref('SBins/'+binId)
         try {
         rootRef.once('value', function(snapshot){
             let fdata = snapshot.val();
@@ -43,6 +45,7 @@ export default class Detail extends React.Component{
         const { navigation } = this.props;
         let binInfo = this.state.bin;
         return (
+            <ScrollView>
                 <View style={styles.container}>
                 <Bin 
                 bin = {binInfo}
@@ -50,6 +53,7 @@ export default class Detail extends React.Component{
                 redirectHome = {() =>navigation.navigate('Home')}
               />
             </View>
+            </ScrollView>
         )
     }
     
